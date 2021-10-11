@@ -1,0 +1,14 @@
+<template>
+    <lightning-tabset variant="scoped">
+        <lightning-tab label="Standard Memberships">
+            <c-standard-membership-datatable
+                record-id={recordId}
+            ></c-standard-membership-datatable>
+        </lightning-tab>
+        <lightning-tab label="Punch Passes">
+            <c-punch-pass-membership-datatable
+                record-id={recordId}
+            ></c-punch-pass-membership-datatable>
+        </lightning-tab>
+    </lightning-tabset>
+</template>

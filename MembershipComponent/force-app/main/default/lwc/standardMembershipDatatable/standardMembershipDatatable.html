@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title={componentTitle}>
+        <!-- SPINNER ON LOAD -->
+        <lightning-spinner if:true={isLoading} alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+        <!-- ACTIONS -->
+        <lightning-button label="Check In" slot="actions" onclick={handleCheckIn}></lightning-button>
+        <!-- MEMBERSHIPS -->
+        <!-- sldsValidatorIgnoreNextLine -->
+        <lightning-datatable
+            data={standardMemberships}
+            columns={cols}
+            key-field="Id"
+            max-row-selection="1"
+            onrowselection={getSelected}
+        ></lightning-datatable>
+    </lightning-card>
+</template>
