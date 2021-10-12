@@ -1,14 +1,35 @@
 <template>
-    <lightning-tabset variant="scoped">
-        <lightning-tab label="Standard Memberships">
-            <c-standard-membership-datatable
-                record-id={recordId}
-            ></c-standard-membership-datatable>
-        </lightning-tab>
-        <lightning-tab label="Punch Passes">
-            <c-punch-pass-membership-datatable
-                record-id={recordId}
-            ></c-punch-pass-membership-datatable>
-        </lightning-tab>
-    </lightning-tabset>
+    <lightning-card>
+        <div slot="title"></div>
+        <template if:true={locations}>
+            <div class="slds-var-m-around_xx-small">
+                <div class="slds-align_absolute-center">
+                    <lightning-combobox
+                        name="Location"
+                        label="Check In Location"
+                        placeholder="Select Location"
+                        value={locationChoice}
+                        onchange={handleLocationChange}
+                        options={locationOptionValues}>
+                    </lightning-combobox>
+                </div>
+            </div>
+        </template>
+        <lightning-tabset variant="scoped" active-tab-value="1">
+            <lightning-tab label={membershipTitle} value="1">
+                <c-standard-membership-datatable
+                    record-id={recordId}
+                    card-title={membershipTitle}
+                    location-id={selectedLocation}
+                ></c-standard-membership-datatable>
+            </lightning-tab>
+            <lightning-tab label={punchPassTitle} value="2">
+                <c-punch-pass-membership-datatable
+                    record-id={recordId}
+                    card-title={punchPassTitle}
+                    location-id={selectedLocation}
+                ></c-punch-pass-membership-datatable>
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
 </template>
