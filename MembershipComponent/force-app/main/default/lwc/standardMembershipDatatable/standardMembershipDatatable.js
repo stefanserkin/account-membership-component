@@ -89,9 +89,18 @@ export default class StandardMembershipDatatable extends LightningElement {
     }
 
     // FACILITY VISIT DML
-
     handleCheckIn() {
+        if (!this.locationId) {
+            alert(`Please select a location to check the Contact into`);
+            return;
+        }
+        if (this.selectedMemberships.length == 0) {
+            alert(`Please select a membership to check in`);
+            return;
+        }
+
         this.isLoading = true;
+
         checkInMemberships({memList: this.selectedMemberships, scanningLocation: this.locationId})
             .then((fvs) => {
                 console.table(fvs);

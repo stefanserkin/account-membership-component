@@ -2,7 +2,6 @@ import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import getPunchPassMemberships from '@salesforce/apex/MembershipComponentController.getPunchPassMemberships';
-import getScanningLocations from '@salesforce/apex/MembershipComponentController.getScanningLocations';
 import createPassDecrements from '@salesforce/apex/MembershipComponentController.createPassDecrements';
 
 const COLS = [
@@ -54,8 +53,6 @@ export default class StandardMembershipDatatable extends LightningElement {
                 memUrl = `/${row.Id}`;
                 contactUrl = `/${row.TREX1__Contact__c}`;
                 if (row.TREX1__Stored_Value__c > row.TREX1__Total_Value__c) {
-                    console.log(row.TREX1__Stored_Value__c);
-                    console.log(row.TREX1__Total_Value__c);
                     statusIcon = 'utility:success';
                     typeColor = 'slds-text-color_success';
                 }
@@ -91,7 +88,17 @@ export default class StandardMembershipDatatable extends LightningElement {
     }
 
     handleDecrement() {
+        if (!this.locationId) {
+            alert(`Please select a location to check the Contact into`);
+            return;
+        }
+        if (this.selectedMemberships.length == 0) {
+            alert(`Please select a membership to check in`);
+            return;
+        }
+
         this.isLoading = true;
+        
         createPassDecrements({memList : this.selectedMemberships, scanningLocation : this.locationId})
             .then((emptyMemIds) => {
                 console.log(emptyMemIds);
